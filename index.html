@@ -2642,7 +2642,6 @@ return`<div class="card" style="border-color:${STATE.sessionActive?'rgba(102,187
 <div style="display:flex;gap:5px;flex-wrap:wrap">
 ${Object.entries(LOG_TYPES).map(([k,t])=>`<button class="btn btn-sm" style="font-size:0.6rem;background:rgba(10,8,30,0.8);color:${t.color};border:1px solid ${t.color}30" onclick="STATE.manualEntry={who:'',what:'',type:'${k}'};render()">${t.icon} ${t.label}</button>`).join('')}
 </div>`:''}
-
   </div>
   ${STATE.manualEntry.type&&STATE.sessionActive?`<div class="card" style="border-color:${LOG_TYPES[STATE.manualEntry.type]?.color}40">
     <div style="display:flex;justify-content:space-between;margin-bottom:10px">
@@ -2660,15 +2659,17 @@ ${Object.entries(LOG_TYPES).map(([k,t])=>`<button class="btn btn-sm" style="font
     </div>
     <button class="btn btn-purple" onclick="submitLogEntry()">+ Add to Log</button>
   </div>`:''}
-  ${STATE.sessionLog.length?`<div class="card">
-    <input class="input" style="margin-bottom:8px" placeholder="🔍 Search..." value="${esc(STATE.logSearch)}" oninput="STATE.logSearch=this.value;render()">
-    <div style="display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;margin-bottom:10px">
-      <button class="btn btn-sm" style="${STATE.logFilter==='all'?'background:rgba(138,90,220,0.2);color:var(--purple-light);border-color:var(--purple)':''}" onclick="STATE.logFilter='all';render()">All (${STATE.sessionLog.length})</button>
-      ${Object.entries(LOG_TYPES).map(([k,t])=>{const cnt=STATE.sessionLog.filter(e=>e.type===k).length;if(!cnt)return'';return`<button class="btn btn-sm" style="flex-shrink:0;${STATE.logFilter===k?'background:rgba(10,8,30,0.9);color:'+t.color+';border-color:'+t.color:''}" onclick="STATE.logFilter='${k}';render()">${t.icon} ${cnt}</button>`;}).join('')}
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <span style="font-size:0.62rem;color:var(--dim);font-family:Arial,sans-serif">${filtered.length} entries</span>
-      <button class="btn btn-sm" style="background:rgba(60,10,10,0.6);color:#888" onclick="if(STATE.sessionLog.length){STATE.sessionLog.splice(STATE.sessionLog.length-1,1);save('session_log',STATE.sessionLog);render()}">↩ Undo</button>
+  ${STATE.sessionLog.length?`
+    <div class="card">
+      <input class="input" style="margin-bottom:8px" placeholder="🔍 Search..." value="${esc(STATE.logSearch)}" oninput="STATE.logSearch=this.value;render()">
+      <div style="display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;margin-bottom:10px">
+        <button class="btn btn-sm" style="${STATE.logFilter==='all'?'background:rgba(138,90,220,0.2);color:var(--purple-light);border-color:var(--purple)':''}" onclick="STATE.logFilter='all';render()">All (${STATE.sessionLog.length})</button>
+        ${Object.entries(LOG_TYPES).map(([k,t])=>{const cnt=STATE.sessionLog.filter(e=>e.type===k).length;if(!cnt)return'';return`<button class="btn btn-sm" style="flex-shrink:0;${STATE.logFilter===k?'background:rgba(10,8,30,0.9);color:'+t.color+';border-color:'+t.color:''}" onclick="STATE.logFilter='${k}';render()">${t.icon} ${cnt}</button>`;}).join('')}
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:0.62rem;color:var(--dim);font-family:Arial,sans-serif">${filtered.length} entries</span>
+        <button class="btn btn-sm" style="background:rgba(60,10,10,0.6);color:#888" onclick="if(STATE.sessionLog.length){STATE.sessionLog.splice(STATE.sessionLog.length-1,1);save('session_log',STATE.sessionLog);render()}">↩ Undo</button>
+      </div>
     </div>
     ${sessions.map(sNum=>{
       const entries=[...filtered.filter(e=>e.session===sNum)].reverse();if(!entries.length)return'';
@@ -2676,8 +2677,8 @@ ${Object.entries(LOG_TYPES).map(([k,t])=>`<button class="btn btn-sm" style="font
       const startE=allS.find(e=>e.type==='session'&&(e.what||'').includes('began'));
       const endE=allS.find(e=>e.type==='session'&&(e.what||'').includes('ended'));
       return`<div style="margin-bottom:16px">
-        <div style="background:rgba(138,90,220,0.08);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-          <span style="font-weight:bold;font-size:0.76rem;color:var(--purple-light)">Session ${sNum}</span>
+        <div class="card" style="padding:8px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;border-color:var(--purple-light);">
+          <span style="font-weight:bold;font-size:0.86rem;color:var(--purple-light)">Session ${sNum}</span>
           <div style="font-size:0.6rem;color:var(--dim);font-family:Arial,sans-serif;text-align:right">${startE?`<div>Started ${startE.time}</div>`:''}${endE?`<div>Ended ${endE.time}</div>`:''}${allS.length} entries</div>
         </div>
         ${entries.map(e=>{const t=LOG_TYPES[e.type]||LOG_TYPES.note;return`<div class="log-entry">
@@ -2694,8 +2695,9 @@ ${Object.entries(LOG_TYPES).map(([k,t])=>`<button class="btn btn-sm" style="font
     <div style="text-align:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--dimmer)">
       <button class="btn btn-sm" style="background:rgba(40,10,10,0.8);color:#888" onclick="if(confirm('Clear all logs?')){STATE.sessionLog=[];STATE.sessionNumber=1;STATE.sessionActive=false;STATE.sessionStartTime=null;saveAll();render()}">🗑 Clear All</button>
     </div>
-  </div>`:`<div class="empty-state"><div class="empty-icon">⏱</div><div>No session started yet.</div></div>`}`;
+  `:`<div class="empty-state"><div class="empty-icon">⏱</div><div>No session started yet.</div></div>`}`;
 }
+
 
 // MAP TAB
 function renderMap(){
