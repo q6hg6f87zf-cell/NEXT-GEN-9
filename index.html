@@ -2660,7 +2660,7 @@ ${Object.entries(LOG_TYPES).map(([k,t])=>`<button class="btn btn-sm" style="font
     </div>
     <button class="btn btn-purple" onclick="submitLogEntry()">+ Add to Log</button>
   </div>`:''}
-  ${STATE.sessionLog.length?`<div>
+  ${STATE.sessionLog.length?`<div class="card">
     <input class="input" style="margin-bottom:8px" placeholder="🔍 Search..." value="${esc(STATE.logSearch)}" oninput="STATE.logSearch=this.value;render()">
     <div style="display:flex;gap:5px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;margin-bottom:10px">
       <button class="btn btn-sm" style="${STATE.logFilter==='all'?'background:rgba(138,90,220,0.2);color:var(--purple-light);border-color:var(--purple)':''}" onclick="STATE.logFilter='all';render()">All (${STATE.sessionLog.length})</button>
