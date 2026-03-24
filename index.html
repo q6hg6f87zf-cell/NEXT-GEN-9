@@ -11,23 +11,24 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{
   font-family:'Inter',sans-serif;
-  background:#050510; color:#e8e0ff; min-height:100vh; overflow-x:hidden;
-  /* Subtle film grain texture */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  /* Pulls your exact image in, centers it, and locks it in place so you scroll over it */
+  background: #050510 url("IMG_5121.png") center center / cover no-repeat fixed; 
+  color:#e8e0ff; min-height:100vh; overflow-x:hidden;
 }
 .header-title, .section-title, .dice-svg text { font-family:'Cinzel',serif; }
 :root{
-  --purple:#8a5adc;--purple-light:#b388ff;--purple-dim:#3d2b6b;
-  --gold:#ffd54f;--green:#66bb6a;--red:#ef5350;--blue:#4fc3f7;
-  --dim:#7b6fa0;--dimmer:#3d3560;--text:#c8c0e8;
-  --card:rgba(15, 12, 35, 0.6); /* Adjusted for glassmorphism */
-  --border:rgba(138,90,220,0.3);
-  --border-glow:rgba(138,90,220,0.7);
-  --bg:linear-gradient(135deg,#050510 0%,#0a0825 50%,#050510 100%);
+  /* Tweaked to match the cosmic purples and brassy gears in your art */
+  --purple:#9d72ff; --purple-light:#cfa8ff; --purple-dim:#2a1f5e;
+  --gold:#d4af37; --green:#66bb6a; --red:#ef5350; --blue:#4fc3f7;
+  --dim:#8b85a1; --dimmer:#3d3560; --text:#e8e0ff;
+  --card:rgba(10, 8, 30, 0.65); /* Made slightly more transparent to see the stars */
+  --border:rgba(157, 114, 255, 0.3);
+  --border-glow:rgba(157, 114, 255, 0.6);
+  --bg:transparent; /* Essential: removes the solid background so the image shows */
 }
 
 /* Layout */
-#app{max-width:480px;margin:0 auto;min-height:100vh;background:var(--bg)}
+#app{max-width:480px;margin:0 auto;min-height:100vh;background:transparent}
 .header{background:rgba(10,8,30,0.98);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:0;z-index:50}
 .header-title{font-weight:bold;font-size:0.9rem;color:#fff;letter-spacing:2px}
 .header-title span{color:var(--purple-light)}
