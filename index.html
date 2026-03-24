@@ -8,6 +8,18 @@
 <title>The Hollow Realm — GM Suite</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+  /* Brightens the small text (like @usernames and locations) so it doesn't get lost */
+  --dim: #c8c0e8; 
+}
+
+.player-card, .card {
+  /* Darkens the background of the cards and adds a stronger blur to the image directly behind them */
+  background: rgba(10, 8, 30, 0.85) !important;
+  backdrop-filter: blur(12px) !important; 
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
     .header-badge {
   background: linear-gradient(135deg, #c48248, #8b5a2b) !important;
   box-shadow: 0 0 12px rgba(196, 130, 72, 0.5) !important;
